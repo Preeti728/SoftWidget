@@ -1,33 +1,23 @@
-# DynamoDB Starter Alexa Template
+# Alexa Soft Widget!
 
-This is a simple template that shows use of DynamoDB with Alexa. This template uses the [Alexa Skills Kit for Node.js](https://github.com/alexa/alexa-skills-kit-sdk-for-nodejs) version 2.0 and is designed to be used with the [Alexa Skills Kit CLI](https://developer.amazon.com/docs/smapi/ask-cli-intro.html).
+Hi! This is an application that help you place orders using **Alexa**. 
 
 
-## Instructions to execute this template 
-- Provide DynamoDB execution permission to the Lambda.
-- Create a DynamoDB table with name dynamodb-starter and schema, userId as a Partition Key and movieTitle as a sort key. 
+# Technical Stack
+- Alexa Skill
+- AWS Lambda
+- DynamoDB
 
-```
-{
-    AttributeDefinitions: [
-        {
-            AttributeName: 'userId',
-            AttributeType: 'S'
-        },
-        {
-            AttributeName: 'movieTitle',
-            AttributeType: 'S'
-        }
-    ],
-    KeySchema: [
-        {
-            AttributeName: 'userId',
-            KeyType: 'HASH'
-        },
-        {
-            AttributeName: 'movieTitle',
-            KeyType: 'RANGE'
-        }
-    ]
-}
+> This technical stack is still under revision
+	
+# Workflow
+```mermaid
+graph LR
+A[User] -- Ask --> C((Alexa Skill))
+C -- Tell --> A
+C -- API Request --> E{AWS Lambda}
+E -- API Response --> C
+E -- API Request --> F(DynamoDB)
+F -- API Response --> E
+
 ```
