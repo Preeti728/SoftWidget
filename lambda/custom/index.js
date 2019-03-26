@@ -4,13 +4,13 @@
 const Alexa = require('ask-sdk');
 const dbHelper = require('./helpers/dbHelper');
 const GENERAL_REPROMPT = "What would you like to do?";
-const dynamoDBTableName = "dynamodb-starter";
+const dynamoDBTableName = "soft-widget";
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
   },
   handle(handlerInput) {
-    const speechText = 'Hello there. What is your favourite movie? You can say add moviename to add your favourite movie or say list my movies to get your favourite movies.';
+    const speechText = 'Hello Cyber Group. What is your favourite movie? You can say add moviename to add your favourite movie or say list my movies to get your favourite movies.';
     const repromptText = 'What would you like to do? You can say HELP to get available options';
 
     return handlerInput.responseBuilder

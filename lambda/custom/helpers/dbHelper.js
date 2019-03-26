@@ -1,6 +1,6 @@
 var AWS = require("aws-sdk");
 AWS.config.update({region: "us-east-1"});
-const tableName = "dynamodb-starter";
+const tableName = "soft-widget";
 
 var dbHelper = function () { };
 var docClient = new AWS.DynamoDB.DocumentClient();

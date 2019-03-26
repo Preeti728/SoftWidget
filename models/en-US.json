@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "dynamodb starter",
+            "invocationName": "movie listing",
             "intents": [
                 {
                     "name": "AMAZON.CancelIntent",
