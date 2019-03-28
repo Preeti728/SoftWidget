@@ -15,20 +15,30 @@
                     "name": "AMAZON.StopIntent",
                     "samples": []
                 },
+                
                 {
                     "name": "AddMovieIntent",
                     "slots": [
                         {
-                            "name": "MovieName",
+                            "name": "ProductName",
                             "type": "AMAZON.Movie",
                             "samples": [
-                                "{MovieName}"
+                                "My product name is {ProductName}",
+                                "{ProductName}"
+                            ]
+                        },
+                        {
+                            "name": "ProductCategory",
+                            "type": "AMAZON.Movie",
+                            "samples": [
+                                "{ProductCategory}"
                             ]
                         }
                     ],
                     "samples": [
-                        "add {MovieName}",
-                        "add"
+                        "add a product {ProductName} to {ProductCategory}",
+                        "add a product {ProductName}",
+                        "add a product"
                     ]
                 },
                 {
@@ -53,28 +63,17 @@
                         "remove {MovieName}",
                         "remove"
                     ]
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
                 }
             ],
             "types": []
         },
         "dialog": {
             "intents": [
-                {
-                    "name": "AddMovieIntent",
-                    "confirmationRequired": false,
-                    "prompts": {},
-                    "slots": [
-                        {
-                            "name": "MovieName",
-                            "type": "AMAZON.Movie",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.932310416052.1004645578092"
-                            }
-                        }
-                    ]
-                },
+                
                 {
                     "name": "RemoveMovieIntent",
                     "confirmationRequired": false,
@@ -90,8 +89,34 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "AddMovieIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "ProductName",
+                            "type": "AMAZON.Movie",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.172707220174.18628814363"
+                            }
+                        },
+                        {
+                            "name": "ProductCategory",
+                            "type": "AMAZON.Movie",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.172707220174.233880517640"
+                            }
+                        }
+                    ]
                 }
-            ]
+            ],
+            "delegationStrategy": "SKILL_RESPONSE"
         },
         "prompts": [
             {
@@ -109,6 +134,24 @@
                     {
                         "type": "PlainText",
                         "value": "Which movie would you like to remove "
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.172707220174.18628814363",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the name of your Product?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.172707220174.233880517640",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the category of your product?"
                     }
                 ]
             }

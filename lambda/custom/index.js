@@ -3,8 +3,8 @@
 
 const Alexa = require('ask-sdk');
 const dbHelper = require('./helpers/dbHelper');
+const dbProduct = require('./helpers/dbProduct');
 const GENERAL_REPROMPT = "What would you like to do?";
-const dynamoDBTableName = "soft-widget";
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
@@ -56,6 +56,50 @@ const AddMovieIntentHandler = {
       .catch((err) => {
         console.log("Error occured while saving movie", err);
         const speechText = "we cannot save your movie right now. Try again!"
+        return responseBuilder
+          .speak(speechText)
+          .getResponse();
+      })
+  },
+};
+
+const InProgressAddProductIntentHandler = {
+  canHandle(handlerInput) {
+    const request = handlerInput.requestEnvelope.request;
+    return request.type === 'IntentRequest' &&
+      request.intent.name === 'AddProductIntent' &&
+      request.dialogState !== 'COMPLETED';
+  },
+  handle(handlerInput) {
+    const currentIntent = handlerInput.requestEnvelope.request.intent;
+    return handlerInput.responseBuilder
+      .addDelegateDirective(currentIntent)
+      .getResponse();
+  }
+}
+
+const AddProductIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'AddProductIntent';
+  },
+  async handle(handlerInput) {
+    const {responseBuilder } = handlerInput;
+    const userID = handlerInput.requestEnvelope.context.System.user.userId; 
+    const slots = handlerInput.requestEnvelope.request.intent.slots;
+    const productName = slots.ProductName.value;
+    const productCategory = slots.ProductCategory.value;
+    return dbProduct.addProduct(productName, productCategory, userID)
+      .then((data) => {
+        const speechText = `You have added a product ${productName}. You can say add to add another one or remove to remove a product`;
+        return responseBuilder
+          .speak(speechText)
+          .reprompt(GENERAL_REPROMPT)
+          .getResponse();
+      })
+      .catch((err) => {
+        console.log("Error occured while saving product", err);
+        const speechText = "we cannot save your product right now. Try again!"
         return responseBuilder
           .speak(speechText)
           .getResponse();
@@ -198,6 +242,7 @@ exports.handler = skillBuilder
     LaunchRequestHandler,
     InProgressAddMovieIntentHandler,
     AddMovieIntentHandler,
+    AddProductIntentHandler,
     GetMoviesIntentHandler,
     InProgressRemoveMovieIntentHandler,
     RemoveMovieIntentHandler,
@@ -206,6 +251,4 @@ exports.handler = skillBuilder
     SessionEndedRequestHandler
   )
   .addErrorHandlers(ErrorHandler)
-  .withTableName(dynamoDBTableName)
-  .withAutoCreateTable(true)
   .lambda();
