@@ -34,7 +34,7 @@
             "codeUri": "lambda/custom",
             "functionName": "ask-custom-dynamodb-starter-alexa-default",
             "handler": "index.handler",
-            "revisionId": "814e018c-1c74-41ae-bd35-2782b2a41577",
+            "revisionId": "c68b7219-6b91-4842-b0b6-61104ea13e7b",
             "runtime": "nodejs8.10"
           }
         ]
