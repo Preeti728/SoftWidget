@@ -29,5 +29,55 @@ dbProduct.prototype.addProduct = (product, category, userID) => {
     });
 }
 
+dbProduct.prototype.getProducts = (userID) => {
+    return new Promise((resolve, reject) => {
+        const params = {
+            TableName: tableName,
+            KeyConditionExpression: "#userID = :user_id",
+            ExpressionAttributeNames: {
+                "#userID": "userId"
+            },
+            ExpressionAttributeValues: {
+                ":user_id": userID
+            }
+        }
+        docClient.query(params, (err, data) => {
+            if (err) {
+                console.error("Unable to read item. Error JSON:", JSON.stringify(err, null, 2));
+                return reject(JSON.stringify(err, null, 2))
+            } 
+            console.log("GetItem succeeded:", JSON.stringify(data, null, 2));
+            resolve(data.Items)
+            
+        })
+    });
+}
+
+dbProduct.prototype.getProductDetail = (userID, productName) => {
+    return new Promise((resolve, reject) => {
+        const params = {
+            TableName: tableName,
+            KeyConditionExpression: "#userID = :user_id and #productName = :productName",
+            ExpressionAttributeNames: {
+                "#userID": "userId",
+                "#productName": "productName"
+            },
+            ExpressionAttributeValues: {
+                ":user_id": userID,
+                ":productName": productName
+            }
+        }
+        docClient.query(params, (err, data) => {
+            if (err) {
+                console.error("Unable to read item. Error JSON:", JSON.stringify(err, null, 2));
+                return reject(JSON.stringify(err, null, 2))
+            } 
+            console.log("GetItem by Name succeeded:", JSON.stringify(data, null, 2));
+            resolve(data.Items)
+            
+        })
+    });
+}
+
 
 module.exports = new dbProduct();
