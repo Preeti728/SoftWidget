@@ -4,13 +4,16 @@
 const Alexa = require('ask-sdk');
 const dbHelper = require('./helpers/dbHelper');
 const dbProduct = require('./helpers/dbProduct');
+const dbOrder = require('./helpers/dbOrder');
 const GENERAL_REPROMPT = "What would you like to do?";
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
   },
   handle(handlerInput) {
-    const speechText = 'Softwidget, Inc., is an American multinational company established in 2017 based in Dallas, Texas, that focuses in e-commerce, cloud computing, and artificial intelligence with a total of 23000 employess world wide. Sofwidget is the second largest e-commerce marketplace and cloud computing platform in the world as measured by revenue and market capitalization with a technology spend of 20 millib and with revenue 50 billion';
+    const speechText = `Softwidget, Inc. - Thakur, is an American multinational company established in 2017 based in Dallas, Texas, that focuses in e-commerce, cloud computing, and artificial intelligence with a total of 23000 employess world wide. \
+    Sofwidget is the second largest e-commerce marketplace and cloud computing platform in the world as measured by revenue and market capitalization with a technology spend of 20 millib and with revenue 50 billion. \
+    What would you like to do next? You can say Tell me about Soft Widget CIO,Tell me about Soft Widget CEO,tell about SWGen two dx,Place an order,cancel order or order status`;
     const repromptText = 'What would you like to do? You can say HELP to get available options';
 
     return handlerInput.responseBuilder
@@ -283,11 +286,27 @@ const PostSoftWidgetOrderIntentHandler = {
   },
   async handle(handlerInput) {
     const {responseBuilder } = handlerInput;
-    const speechText = "your SWGen2dx Order has been placed "
-    return responseBuilder
-      .speak(speechText)
-      .reprompt(GENERAL_REPROMPT)
-      .getResponse();
+    const userID = handlerInput.requestEnvelope.context.System.user.userId; 
+    const slots = handlerInput.requestEnvelope.request.intent.slots;
+    const quantity = slots.Quantity.value;
+    const address = slots.Address.value;
+    const number = Math.floor(Math.random() * 10000).toString();
+    const deliveryDate = new Date(2019, 03, Math.random()*10 + 1).toDateString();
+    return dbOrder.addOrder(number, quantity, address, userID, deliveryDate)
+      .then((data) => {
+        const speechText = `your SWGen2dx Order has been placed. The order number is ${number}`;
+        return responseBuilder
+          .speak(speechText)
+          .reprompt(GENERAL_REPROMPT)
+          .getResponse();
+      })
+      .catch((err) => {
+        console.log("Error occured while saving product", err);
+        const speechText = "we cannot save your product right now. Try again!"
+        return responseBuilder
+          .speak(speechText)
+          .getResponse();
+      })
   }
 };
 
@@ -315,11 +334,34 @@ const PutSoftWidgetOrderStatusIntentHandler = {
   },
   async handle(handlerInput) {
     const {responseBuilder } = handlerInput;
-    const speechText = "your SWGen2dx is on it's way. it will arrive on April 7th 2019"
-    return responseBuilder
-      .speak(speechText)
-      .reprompt(GENERAL_REPROMPT)
-      .getResponse();
+    const userID = handlerInput.requestEnvelope.context.System.user.userId; 
+    const slots = handlerInput.requestEnvelope.request.intent.slots;
+    const number = slots.Number.value;
+    let speechText = `your SWGen2dx is on it's way.`;
+    return dbOrder.getOrder(number, userID)
+      .then((data) => {
+        data.map(order => {
+          if(order.status != 'cancelled') {
+            speechText += " You have ordered " + order.quantity + " pieces.";
+            speechText += " The order status is " + order.status;
+            speechText += " . It will arrive on "+ order.deliveryDate;
+          }
+          else{
+            speechText = "Sorry, this order has been cancelled."
+          }
+        });
+        return responseBuilder
+          .speak(speechText)
+          .reprompt(GENERAL_REPROMPT)
+          .getResponse();
+      })
+      .catch((err) => {
+        console.log("Error occured while getting order", err);
+        const speechText = "we cannot track your order right now. Try again!"
+        return responseBuilder
+          .speak(speechText)
+          .getResponse();
+      })
   }
 };
 

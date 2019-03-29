@@ -3,7 +3,6 @@
         "languageModel": {
             "invocationName": "soft widget",
             "intents": [
-                
                 {
                     "name": "GetSoftWidgetCIOIntent",
                     "slots": [],
@@ -35,8 +34,27 @@
                 },
                 {
                     "name": "PostSoftWidgetOrderIntent",
-                    "slots": [],
+                    "slots": [
+                        {
+                            "name": "Quantity",
+                            "type": "AMAZON.NUMBER",
+                            "samples": [
+                                "Let's go with {Quantity}",
+                                "I will need {Quantity}",
+                                "{Quantity}"
+                            ]
+                        },
+                        {
+                            "name": "Address",
+                            "type": "AMAZON.StreetAddress",
+                            "samples": [
+                                "Send it to {Address}",
+                                "{Address}"
+                            ]
+                        }
+                    ],
                     "samples": [
+                        "Place an order",
                         "Order SWGen two dx",
                         "Place an order SWGen two dx",
                         "Buy a SWGen two dx",
@@ -49,26 +67,112 @@
                     "slots": [],
                     "samples": [
                         "Cancel my last order",
-                        "cacel my order",
+                        "cancel my order",
                         "cancel order",
-                        "Camcel  SWGen two dx",
+                        "Cancel  SWGen two dx",
                         "I don't need SWGen two dx"
                     ]
                 },
                 {
                     "name": "PutSoftWidgetOrderStatusIntent",
-                    "slots": [],
+                    "slots": [
+                        {
+                            "name": "Number",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
                     "samples": [
                         "tell me my order status",
                         "where is my SWGen two dx",
                         "when is my SWGen two dx arrives",
                         "order status",
-                        "My order status"
+                        "track order",
+                        "track my order",
+                        "my order status"
                     ]
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
                 }
-                
             ],
             "types": []
-        } 
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "PostSoftWidgetOrderIntent",
+                    "delegationStrategy": "ALWAYS",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "Quantity",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.290824169230.66890465090"
+                            }
+                        },
+                        {
+                            "name": "Address",
+                            "type": "AMAZON.StreetAddress",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.290824169230.661227688228"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "PutSoftWidgetOrderStatusIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "Number",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.377838751349.1205280050159"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "delegationStrategy": "ALWAYS"
+        },
+        "prompts": [
+            {
+                "id": "Elicit.Slot.290824169230.66890465090",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "How many would you like to order?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.290824169230.661227688228",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Where would you like it to be delivered?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.377838751349.1205280050159",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the order number?"
+                    }
+                ]
+            }
+        ]
     }
 }
