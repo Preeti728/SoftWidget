@@ -45,7 +45,7 @@
                     ]
                 },
                 {
-                    "name": "PutSoftWidgetOrderCancelIntent",
+                    "name": "PostSoftWidgetOrderCancelIntent",
                     "slots": [],
                     "samples": [
                         "Cancel my last order",
