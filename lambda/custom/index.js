@@ -10,7 +10,7 @@ const LaunchRequestHandler = {
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
   },
   handle(handlerInput) {
-    const speechText = 'Hello Cyber Group. What is your favourite movie? You can say add moviename to add your favourite movie or say list my movies to get your favourite movies.';
+    const speechText = 'Softwidget, Inc., is an American multinational company established in 2017 based in Dallas, Texas, that focuses in e-commerce, cloud computing, and artificial intelligence with a total of 23000 employess world wide. Sofwidget is the second largest e-commerce marketplace and cloud computing platform in the world as measured by revenue and market capitalization with a technology spend of 20 millib and with revenue 50 billion';
     const repromptText = 'What would you like to do? You can say HELP to get available options';
 
     return handlerInput.responseBuilder
@@ -210,6 +210,68 @@ const CancelAndStopIntentHandler = {
   },
 };
 
+
+const GetSoftWidgetIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'GetSoftWidgetIntent';
+  },
+  async handle(handlerInput) {
+    const {responseBuilder } = handlerInput;
+    const speechText = "this is Softwidget"
+    return responseBuilder
+      .speak(speechText)
+      .reprompt(GENERAL_REPROMPT)
+      .getResponse();
+  }
+}
+
+const GetProductInfoIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'GetProductInfoIntent';
+  },
+  async handle(handlerInput) {
+    const {responseBuilder } = handlerInput;
+    const speechText = " The SWGen2dx (conveniently the product SKU) is a revolutionary house-hold product everyone wants. It features a sleek casing with intuitive features. Features include: Rock-solid audio engagement Silver-bullet touch response system.  Long lasting rechargeable battery "
+    return responseBuilder
+      .speak(speechText)
+      .reprompt(GENERAL_REPROMPT)
+      .getResponse();
+  }
+}
+
+const GetSoftWidgetCIOIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'GetSoftWidgetCIOIntent';
+  },
+  async handle(handlerInput) {
+    const {responseBuilder } = handlerInput;
+    const speechText = "Name: Sean Connery. Title: CIO. Persona: Sean is a demolition expert and master of espionage from the CIA. He jumped at the opportunity to work with Sally at SoftWidget as her CIO. Sean is in charge of revolutionizing SoftWidget platforms and maintaining IT operations."
+    return responseBuilder
+      .speak(speechText)
+      .reprompt(GENERAL_REPROMPT)
+      .getResponse();
+  }
+}
+
+const GetSoftWidgetCEOIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'GetSoftWidgetCEOIntent';
+  },
+  async handle(handlerInput) {
+    const {responseBuilder } = handlerInput;
+    const speechText = "Name: Sally Fields. Title: CEO. Persona: Sally started SoftWidget in 2017 and has quickly grown the company through the savvy use of consumer marketing which has caused SoftWidget to go viral. She has a strong background in product development and process engineering. Her vision for SoftWidget is to be a globally recognized widget provider direct to consumer."
+    return responseBuilder
+      .speak(speechText)
+      .reprompt(GENERAL_REPROMPT)
+      .getResponse();
+  }
+}
+
+
 const SessionEndedRequestHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'SessionEndedRequest';
@@ -244,6 +306,10 @@ exports.handler = skillBuilder
     AddMovieIntentHandler,
     AddProductIntentHandler,
     GetMoviesIntentHandler,
+    GetSoftWidgetIntentHandler,
+    GetProductInfoIntentHandler,
+    GetSoftWidgetCIOIntentHandler,
+    GetSoftWidgetCEOIntentHandler,
     InProgressRemoveMovieIntentHandler,
     RemoveMovieIntentHandler,
     HelpIntentHandler,

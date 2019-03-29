@@ -1,160 +1,41 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "movie listing",
+            "invocationName": "soft widget",
             "intents": [
-                {
-                    "name": "AMAZON.CancelIntent",
-                    "samples": []
-                },
-                {
-                    "name": "AMAZON.HelpIntent",
-                    "samples": []
-                },
-                {
-                    "name": "AMAZON.StopIntent",
-                    "samples": []
-                },
                 
                 {
-                    "name": "AddMovieIntent",
-                    "slots": [
-                        {
-                            "name": "ProductName",
-                            "type": "AMAZON.Movie",
-                            "samples": [
-                                "My product name is {ProductName}",
-                                "{ProductName}"
-                            ]
-                        },
-                        {
-                            "name": "ProductCategory",
-                            "type": "AMAZON.Movie",
-                            "samples": [
-                                "{ProductCategory}"
-                            ]
-                        }
-                    ],
-                    "samples": [
-                        "add a product {ProductName} to {ProductCategory}",
-                        "add a product {ProductName}",
-                        "add a product"
-                    ]
-                },
-                {
-                    "name": "GetMoviesIntent",
+                    "name": "GetSoftWidgetCIOIntent",
                     "slots": [],
                     "samples": [
-                        "get my movies"
+                        "Tell me about Soft Widget CIO",
+                        "CIO",
+                        "Soft Widget CIO"
                     ]
                 },
                 {
-                    "name": "RemoveMovieIntent",
-                    "slots": [
-                        {
-                            "name": "MovieName",
-                            "type": "AMAZON.Movie",
-                            "samples": [
-                                "{MovieName}"
-                            ]
-                        }
-                    ],
+                    "name": "GetSoftWidgetCEOIntent",
+                    "slots": [],
                     "samples": [
-                        "remove {MovieName}",
-                        "remove"
+                        "Tell me about Soft Widget CEO",
+                        "CEO",
+                        "Soft Widget CEO"
                     ]
                 },
                 {
-                    "name": "AMAZON.NavigateHomeIntent",
-                    "samples": []
+                    "name": "GetProductInfoIntent",
+                    "slots": [],
+                    "samples": [
+                        "Tell me about Soft Widgets product SWGen two dx",
+                        "SWGen two dx",
+                        "Soft Widget SWGen two dx",
+                        "What is SWGen two dx",
+                        "tell about SWGen two dx"
+                    ]
                 }
+                
             ],
             "types": []
-        },
-        "dialog": {
-            "intents": [
-                
-                {
-                    "name": "RemoveMovieIntent",
-                    "confirmationRequired": false,
-                    "prompts": {},
-                    "slots": [
-                        {
-                            "name": "MovieName",
-                            "type": "AMAZON.Movie",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.1034415917954.788060345760"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "AddMovieIntent",
-                    "confirmationRequired": false,
-                    "prompts": {},
-                    "slots": [
-                        {
-                            "name": "ProductName",
-                            "type": "AMAZON.Movie",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.172707220174.18628814363"
-                            }
-                        },
-                        {
-                            "name": "ProductCategory",
-                            "type": "AMAZON.Movie",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.172707220174.233880517640"
-                            }
-                        }
-                    ]
-                }
-            ],
-            "delegationStrategy": "SKILL_RESPONSE"
-        },
-        "prompts": [
-            {
-                "id": "Elicit.Slot.932310416052.1004645578092",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "Which movie would you like to add "
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.1034415917954.788060345760",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "Which movie would you like to remove "
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.172707220174.18628814363",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "What is the name of your Product?"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.172707220174.233880517640",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "What is the category of your product?"
-                    }
-                ]
-            }
-        ]
+        } 
     }
 }
