@@ -63,21 +63,6 @@ const AddMovieIntentHandler = {
   },
 };
 
-const InProgressAddProductIntentHandler = {
-  canHandle(handlerInput) {
-    const request = handlerInput.requestEnvelope.request;
-    return request.type === 'IntentRequest' &&
-      request.intent.name === 'AddProductIntent' &&
-      request.dialogState !== 'COMPLETED';
-  },
-  handle(handlerInput) {
-    const currentIntent = handlerInput.requestEnvelope.request.intent;
-    return handlerInput.responseBuilder
-      .addDelegateDirective(currentIntent)
-      .getResponse();
-  }
-}
-
 const AddProductIntentHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
@@ -136,6 +121,79 @@ const GetMoviesIntentHandler = {
       })
   }
 }
+
+const GetProductDetailIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'GetProductDetailIntent';
+  },
+  async handle(handlerInput) {
+    const {responseBuilder } = handlerInput;
+    const userID = handlerInput.requestEnvelope.context.System.user.userId; 
+    const slots = handlerInput.requestEnvelope.request.intent.slots;
+    const productName = slots.ProductName.value;
+
+    return dbProduct.getProductDetail(userID, productName)
+      .then((data) => {
+        var speechText = "Here are the details for "
+        if (data.length == 0) {
+          speechText = "We could not find that product"
+        } else {
+          data.map(product => {
+            speechText += product.productName;
+            speechText += ". ";
+            speechText += product.description;
+            speechText += ". ";
+            speechText += "It costs " + product.price + " dollars. ";
+            speechText += "You can find it under " + product.category + " category. ";
+            speechText += "We currently have " + product.quantity + " pieces of this product. ";
+          });
+        }
+        return responseBuilder
+          .speak(speechText)
+          .reprompt(GENERAL_REPROMPT)
+          .getResponse();
+      })
+      .catch((err) => {
+        console.log(err);
+        const speechText = "Some error occcured in fetching that product. Try again!"
+        return responseBuilder
+          .speak(speechText)
+          .getResponse();
+      })
+  }
+}
+
+const GetProductsIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'GetProductsIntent';
+  },
+  async handle(handlerInput) {
+    const {responseBuilder } = handlerInput;
+    const userID = handlerInput.requestEnvelope.context.System.user.userId; 
+    return dbProduct.getProducts(userID)
+      .then((data) => {
+        var speechText = "We have the following products - "
+        if (data.length == 0) {
+          speechText = "You do not have any favourite movie yet, add movie by saving add moviename "
+        } else {
+          speechText += data.map(e => e.productName).join(", ")
+        }
+        return responseBuilder
+          .speak(speechText)
+          .reprompt(GENERAL_REPROMPT)
+          .getResponse();
+      })
+      .catch((err) => {
+        const speechText = "we cannot get your movie right now. Try again!"
+        return responseBuilder
+          .speak(speechText)
+          .getResponse();
+      })
+  }
+}
+
 
 const InProgressRemoveMovieIntentHandler = {
   canHandle(handlerInput) {
@@ -244,6 +302,8 @@ exports.handler = skillBuilder
     AddMovieIntentHandler,
     AddProductIntentHandler,
     GetMoviesIntentHandler,
+    GetProductsIntentHandler,
+    GetProductDetailIntentHandler,
     InProgressRemoveMovieIntentHandler,
     RemoveMovieIntentHandler,
     HelpIntentHandler,

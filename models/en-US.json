@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "movie listing",
+            "invocationName": "cyber soft",
             "intents": [
                 {
                     "name": "AMAZON.CancelIntent",
@@ -15,9 +15,24 @@
                     "name": "AMAZON.StopIntent",
                     "samples": []
                 },
-                
                 {
                     "name": "AddMovieIntent",
+                    "slots": [
+                        {
+                            "name": "MovieName",
+                            "type": "AMAZON.Movie",
+                            "samples": [
+                                "{MovieName}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "add {MovieName}",
+                        "add"
+                    ]
+                },
+                {
+                    "name": "AddProductIntent",
                     "slots": [
                         {
                             "name": "ProductName",
@@ -49,6 +64,16 @@
                     ]
                 },
                 {
+                    "name": "GetProductsIntent",
+                    "slots": [],
+                    "samples": [
+                        "list the products",
+                        "what products can I buy",
+                        "what products do you have",
+                        "all products"
+                    ]
+                },
+                {
                     "name": "RemoveMovieIntent",
                     "slots": [
                         {
@@ -67,13 +92,41 @@
                 {
                     "name": "AMAZON.NavigateHomeIntent",
                     "samples": []
+                },
+                {
+                    "name": "GetProductDetailIntent",
+                    "slots": [
+                        {
+                            "name": "ProductName",
+                            "type": "AMAZON.Movie"
+                        }
+                    ],
+                    "samples": [
+                        "tell me more",
+                        "tell me about  {ProductName}"
+                    ]
                 }
             ],
             "types": []
         },
         "dialog": {
             "intents": [
-                
+                {
+                    "name": "AddMovieIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "MovieName",
+                            "type": "AMAZON.Movie",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.932310416052.1004645578092"
+                            }
+                        }
+                    ]
+                },
                 {
                     "name": "RemoveMovieIntent",
                     "confirmationRequired": false,
@@ -91,7 +144,8 @@
                     ]
                 },
                 {
-                    "name": "AddMovieIntent",
+                    "name": "AddProductIntent",
+                    "delegationStrategy": "ALWAYS",
                     "confirmationRequired": false,
                     "prompts": {},
                     "slots": [
@@ -111,6 +165,23 @@
                             "elicitationRequired": true,
                             "prompts": {
                                 "elicitation": "Elicit.Slot.172707220174.233880517640"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "GetProductDetailIntent",
+                    "delegationStrategy": "ALWAYS",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "ProductName",
+                            "type": "AMAZON.Movie",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.733004738528.491311705481"
                             }
                         }
                     ]
@@ -152,6 +223,15 @@
                     {
                         "type": "PlainText",
                         "value": "What is the category of your product?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.733004738528.491311705481",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Which product do you want to know about?"
                     }
                 ]
             }
