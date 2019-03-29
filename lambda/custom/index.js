@@ -10,7 +10,7 @@ const LaunchRequestHandler = {
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
   },
   handle(handlerInput) {
-    const speechText = 'Hello Cyber Group. What is your favourite movie? You can say add moviename to add your favourite movie or say list my movies to get your favourite movies.';
+    const speechText = 'Softwidget, Inc., is an American multinational company established in 2017 based in Dallas, Texas, that focuses in e-commerce, cloud computing, and artificial intelligence with a total of 23000 employess world wide. Sofwidget is the second largest e-commerce marketplace and cloud computing platform in the world as measured by revenue and market capitalization with a technology spend of 20 millib and with revenue 50 billion';
     const repromptText = 'What would you like to do? You can say HELP to get available options';
 
     return handlerInput.responseBuilder
@@ -120,7 +120,7 @@ const GetMoviesIntentHandler = {
           .getResponse();
       })
   }
-}
+};
 
 const GetProductDetailIntentHandler = {
   canHandle(handlerInput) {
@@ -208,7 +208,7 @@ const InProgressRemoveMovieIntentHandler = {
       .addDelegateDirective(currentIntent)
       .getResponse();
   }
-}
+};
 
 const RemoveMovieIntentHandler = {
   canHandle(handlerInput) {
@@ -236,7 +236,7 @@ const RemoveMovieIntentHandler = {
           .getResponse();
       })
   }
-}
+};
 
 const HelpIntentHandler = {
   canHandle(handlerInput) {
@@ -268,6 +268,122 @@ const CancelAndStopIntentHandler = {
   },
 };
 
+/* SoftWidget Start */
+//  GetSoftWidgetIntent
+const GetSoftWidgetIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'GetSoftWidgetIntent';
+  },
+  async handle(handlerInput) {
+    const {responseBuilder } = handlerInput;
+    const speechText = "this is Softwidget"
+    return responseBuilder
+      .speak(speechText)
+      .reprompt(GENERAL_REPROMPT)
+      .getResponse();
+  }
+};
+
+// Get Product Info 
+const GetProductInfoIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'GetProductInfoIntent';
+  },
+  async handle(handlerInput) {
+    const {responseBuilder } = handlerInput;
+    const speechText = " The SWGen2dx (conveniently the product SKU) is a revolutionary house-hold product everyone wants. It features a sleek casing with intuitive features. Features include: Rock-solid audio engagement Silver-bullet touch response system.  Long lasting rechargeable battery "
+    return responseBuilder
+      .speak(speechText)
+      .reprompt(GENERAL_REPROMPT)
+      .getResponse();
+  }
+};
+
+// SoftWidget CIO 
+const GetSoftWidgetCIOIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'GetSoftWidgetCIOIntent';
+  },
+  async handle(handlerInput) {
+    const {responseBuilder } = handlerInput;
+    const speechText = "Name: Sean Connery. Title: CIO. Persona: Sean is a demolition expert and master of espionage from the CIA. He jumped at the opportunity to work with Sally at SoftWidget as her CIO. Sean is in charge of revolutionizing SoftWidget platforms and maintaining IT operations."
+    return responseBuilder
+      .speak(speechText)
+      .reprompt(GENERAL_REPROMPT)
+      .getResponse();
+  }
+};
+
+// SoftWidget CIO 
+const GetSoftWidgetCEOIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'GetSoftWidgetCEOIntent';
+  },
+  async handle(handlerInput) {
+    const {responseBuilder } = handlerInput;
+    const speechText = "Name: Sally Fields. Title: CEO. Persona: Sally started SoftWidget in 2017 and has quickly grown the company through the savvy use of consumer marketing which has caused SoftWidget to go viral. She has a strong background in product development and process engineering. Her vision for SoftWidget is to be a globally recognized widget provider direct to consumer."
+    return responseBuilder
+      .speak(speechText)
+      .reprompt(GENERAL_REPROMPT)
+      .getResponse();
+  }
+};
+
+// Place Order 
+const PostSoftWidgetOrderIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'PostSoftWidgetOrderIntent';
+  },
+  async handle(handlerInput) {
+    const {responseBuilder } = handlerInput;
+    const speechText = "your SWGen2dx Order has been placed "
+    return responseBuilder
+      .speak(speechText)
+      .reprompt(GENERAL_REPROMPT)
+      .getResponse();
+  }
+};
+
+// Cancel  order 
+const PutSoftWidgetOrderCancelIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'PostSoftWidgetOrderCancelIntent';
+  },
+  async handle(handlerInput) {
+    const {responseBuilder } = handlerInput;
+    const speechText = "Your SWGen2dx Order has been Canceled"
+    return responseBuilder
+      .speak(speechText)
+      .reprompt(GENERAL_REPROMPT)
+      .getResponse();
+  }
+};
+
+// Order Status 
+const PutSoftWidgetOrderStatusIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'PutSoftWidgetOrderStatusIntent';
+  },
+  async handle(handlerInput) {
+    const {responseBuilder } = handlerInput;
+    const speechText = "your SWGen2dx is on it's way. it will arrive on April 7th 2019"
+    return responseBuilder
+      .speak(speechText)
+      .reprompt(GENERAL_REPROMPT)
+      .getResponse();
+  }
+};
+
+
+/* END SoftWidget */
+
 const SessionEndedRequestHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'SessionEndedRequest';
@@ -293,6 +409,9 @@ const ErrorHandler = {
   },
 };
 
+
+
+
 const skillBuilder = Alexa.SkillBuilders.standard();
 
 exports.handler = skillBuilder
@@ -306,6 +425,13 @@ exports.handler = skillBuilder
     GetProductDetailIntentHandler,
     InProgressRemoveMovieIntentHandler,
     RemoveMovieIntentHandler,
+    GetSoftWidgetIntentHandler,
+    GetProductInfoIntentHandler,
+    GetSoftWidgetCIOIntentHandler,
+    GetSoftWidgetCEOIntentHandler,
+    PostSoftWidgetOrderIntentHandler,
+    PutSoftWidgetOrderCancelIntentHandler,
+    PutSoftWidgetOrderStatusIntentHandler,
     HelpIntentHandler,
     CancelAndStopIntentHandler,
     SessionEndedRequestHandler

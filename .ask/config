@@ -1,14 +1,14 @@
 {
   "deploy_settings": {
     "default": {
-      "skill_id": "amzn1.ask.skill.8ffc57a2-ab7e-4cc3-8aed-658e067011d9",
+      "skill_id": "amzn1.ask.skill.1d20e80c-7710-4d95-96cb-e45c1a42af00",
       "was_cloned": false,
       "merge": {
         "manifest": {
           "apis": {
             "custom": {
               "endpoint": {
-                "uri": "arn:aws:lambda:us-east-1:294462307778:function:ask-custom-dynamodb-starter-alexa-default"
+                "uri": "arn:aws:lambda:us-east-1:899999595393:function:ask-custom-dynamodb-starter-alexa-default"
               }
             }
           }
@@ -17,11 +17,11 @@
       "in_skill_products": [],
       "resources": {
         "manifest": {
-          "eTag": "0671b2911c696765eec655e8e1ba9faa"
+          "eTag": "b70439a8c4c10315ab38e16886b68726"
         },
         "interactionModel": {
           "en-US": {
-            "eTag": "f4c8e36a9bcaa379e6d071f542e8af7a"
+            "eTag": "f92c102fbc090ac7ded96bf04a89fb94"
           }
         },
         "lambda": [
@@ -29,12 +29,12 @@
             "alexaUsage": [
               "custom/default"
             ],
-            "arn": "arn:aws:lambda:us-east-1:294462307778:function:ask-custom-dynamodb-starter-alexa-default",
+            "arn": "arn:aws:lambda:us-east-1:899999595393:function:ask-custom-dynamodb-starter-alexa-default",
             "awsRegion": "us-east-1",
             "codeUri": "lambda/custom",
             "functionName": "ask-custom-dynamodb-starter-alexa-default",
             "handler": "index.handler",
-            "revisionId": "04732446-4737-4e06-8f9c-5575df312c2e",
+            "revisionId": "c24ed666-ba30-46d9-89d8-966843438c52",
             "runtime": "nodejs8.10"
           }
         ]

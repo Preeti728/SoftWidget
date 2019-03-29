@@ -57,10 +57,21 @@
                     ]
                 },
                 {
-                    "name": "GetMoviesIntent",
+                    "name": "GetSoftWidgetCIOIntent",
                     "slots": [],
                     "samples": [
-                        "get my movies"
+                        "Tell me about Soft Widget CIO",
+                        "CIO",
+                        "Soft Widget CIO"
+                    ]
+                },
+                {
+                    "name": "GetSoftWidgetCEOIntent",
+                    "slots": [],
+                    "samples": [
+                        "Tell me about Soft Widget CEO",
+                        "CEO",
+                        "Soft Widget CEO"
                     ]
                 },
                 {
@@ -85,8 +96,11 @@
                         }
                     ],
                     "samples": [
-                        "remove {MovieName}",
-                        "remove"
+                        "Tell me about Soft Widgets product SWGen two dx",
+                        "SWGen two dx",
+                        "Soft Widget SWGen two dx",
+                        "What is SWGen two dx",
+                        "tell about SWGen two dx"
                     ]
                 },
                 {
@@ -104,6 +118,28 @@
                     "samples": [
                         "tell me more",
                         "tell me about  {ProductName}"
+                    ]
+                },
+                {
+                    "name": "PostSoftWidgetOrderIntent",
+                    "slots": [],
+                    "samples": [
+                        "Order SWGen two dx",
+                        "Place an order SWGen two dx",
+                        "Buy a SWGen two dx",
+                        "get SWGen two dx",
+                        "tell about SWGen two dx"
+                    ]
+                },
+                {
+                    "name": "PutSoftWidgetOrderCancelIntent",
+                    "slots": [],
+                    "samples": [
+                        "Cancel my last order",
+                        "cacel my order",
+                        "cancel order",
+                        "Camcel  SWGen two dx",
+                        "I don't need SWGen two dx"
                     ]
                 }
             ],
@@ -123,22 +159,6 @@
                             "elicitationRequired": true,
                             "prompts": {
                                 "elicitation": "Elicit.Slot.932310416052.1004645578092"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "RemoveMovieIntent",
-                    "confirmationRequired": false,
-                    "prompts": {},
-                    "slots": [
-                        {
-                            "name": "MovieName",
-                            "type": "AMAZON.Movie",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.1034415917954.788060345760"
                             }
                         }
                     ]
@@ -170,6 +190,17 @@
                     ]
                 },
                 {
+                    "name": "PutSoftWidgetOrderStatusIntent",
+                    "slots": [],
+                    "samples": [
+                        "tell me my order status",
+                        "where is my SWGen two dx",
+                        "when is my SWGen two dx arrives",
+                        "order status",
+                        "My order status"
+                    ]
+                },
+                {
                     "name": "GetProductDetailIntent",
                     "delegationStrategy": "ALWAYS",
                     "confirmationRequired": false,
@@ -186,6 +217,7 @@
                         }
                     ]
                 }
+                
             ],
             "delegationStrategy": "SKILL_RESPONSE"
         },
