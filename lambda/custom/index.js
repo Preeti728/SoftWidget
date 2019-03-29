@@ -135,7 +135,7 @@ const GetMoviesIntentHandler = {
           .getResponse();
       })
   }
-}
+};
 
 const InProgressRemoveMovieIntentHandler = {
   canHandle(handlerInput) {
@@ -150,7 +150,7 @@ const InProgressRemoveMovieIntentHandler = {
       .addDelegateDirective(currentIntent)
       .getResponse();
   }
-}
+};
 
 const RemoveMovieIntentHandler = {
   canHandle(handlerInput) {
@@ -178,7 +178,7 @@ const RemoveMovieIntentHandler = {
           .getResponse();
       })
   }
-}
+};
 
 const HelpIntentHandler = {
   canHandle(handlerInput) {
@@ -210,7 +210,8 @@ const CancelAndStopIntentHandler = {
   },
 };
 
-
+/* SoftWidget Start */
+//  GetSoftWidgetIntent
 const GetSoftWidgetIntentHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
@@ -224,8 +225,9 @@ const GetSoftWidgetIntentHandler = {
       .reprompt(GENERAL_REPROMPT)
       .getResponse();
   }
-}
+};
 
+// Get Product Info 
 const GetProductInfoIntentHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
@@ -239,8 +241,9 @@ const GetProductInfoIntentHandler = {
       .reprompt(GENERAL_REPROMPT)
       .getResponse();
   }
-}
+};
 
+// SoftWidget CIO 
 const GetSoftWidgetCIOIntentHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
@@ -254,8 +257,9 @@ const GetSoftWidgetCIOIntentHandler = {
       .reprompt(GENERAL_REPROMPT)
       .getResponse();
   }
-}
+};
 
+// SoftWidget CIO 
 const GetSoftWidgetCEOIntentHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
@@ -269,8 +273,58 @@ const GetSoftWidgetCEOIntentHandler = {
       .reprompt(GENERAL_REPROMPT)
       .getResponse();
   }
-}
+};
 
+// Place Order 
+const PostSoftWidgetOrderIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'PostSoftWidgetOrderIntent';
+  },
+  async handle(handlerInput) {
+    const {responseBuilder } = handlerInput;
+    const speechText = "your SWGen2dx Order has been placed "
+    return responseBuilder
+      .speak(speechText)
+      .reprompt(GENERAL_REPROMPT)
+      .getResponse();
+  }
+};
+
+// Cancel  order 
+const PutSoftWidgetOrderCancelIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'PostSoftWidgetOrderCancelIntent';
+  },
+  async handle(handlerInput) {
+    const {responseBuilder } = handlerInput;
+    const speechText = "Your SWGen2dx Order has been Canceled"
+    return responseBuilder
+      .speak(speechText)
+      .reprompt(GENERAL_REPROMPT)
+      .getResponse();
+  }
+};
+
+// Order Status 
+const PutSoftWidgetOrderStatusIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'PutSoftWidgetOrderStatusIntent';
+  },
+  async handle(handlerInput) {
+    const {responseBuilder } = handlerInput;
+    const speechText = "your SWGen2dx is on its way. it will arrive on Aprth 7th 2019"
+    return responseBuilder
+      .speak(speechText)
+      .reprompt(GENERAL_REPROMPT)
+      .getResponse();
+  }
+};
+
+
+/* END SoftWidget */
 
 const SessionEndedRequestHandler = {
   canHandle(handlerInput) {
@@ -297,6 +351,9 @@ const ErrorHandler = {
   },
 };
 
+
+
+
 const skillBuilder = Alexa.SkillBuilders.standard();
 
 exports.handler = skillBuilder
@@ -306,12 +363,15 @@ exports.handler = skillBuilder
     AddMovieIntentHandler,
     AddProductIntentHandler,
     GetMoviesIntentHandler,
+    InProgressRemoveMovieIntentHandler,
+    RemoveMovieIntentHandler,
     GetSoftWidgetIntentHandler,
     GetProductInfoIntentHandler,
     GetSoftWidgetCIOIntentHandler,
     GetSoftWidgetCEOIntentHandler,
-    InProgressRemoveMovieIntentHandler,
-    RemoveMovieIntentHandler,
+    PostSoftWidgetOrderIntentHandler,
+    PutSoftWidgetOrderCancelIntentHandler,
+    PutSoftWidgetOrderStatusIntentHandler,
     HelpIntentHandler,
     CancelAndStopIntentHandler,
     SessionEndedRequestHandler

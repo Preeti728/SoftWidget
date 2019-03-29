@@ -32,6 +32,39 @@
                         "What is SWGen two dx",
                         "tell about SWGen two dx"
                     ]
+                },
+                {
+                    "name": "PostSoftWidgetOrderIntentHandler",
+                    "slots": [],
+                    "samples": [
+                        "Order SWGen two dx",
+                        "Place an order SWGen two dx",
+                        "Buy a SWGen two dx",
+                        "get SWGen two dx",
+                        "tell about SWGen two dx"
+                    ]
+                },
+                {
+                    "name": "PutSoftWidgetOrderCancelIntentHandler",
+                    "slots": [],
+                    "samples": [
+                        "Cancel my last order",
+                        "cacel my order",
+                        "cancel order",
+                        "Camcel  SWGen two dx",
+                        "I don't need SWGen two dx"
+                    ]
+                },
+                {
+                    "name": "PutSoftWidgetOrderStatusIntent",
+                    "slots": [],
+                    "samples": [
+                        "tell me my order status",
+                        "where is my SWGen two dx",
+                        "when is my SWGen two dx arrives",
+                        "order status",
+                        "My order status"
+                    ]
                 }
                 
             ],
