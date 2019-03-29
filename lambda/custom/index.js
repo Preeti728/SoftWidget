@@ -315,7 +315,7 @@ const PutSoftWidgetOrderStatusIntentHandler = {
   },
   async handle(handlerInput) {
     const {responseBuilder } = handlerInput;
-    const speechText = "your SWGen2dx is on its way. it will arrive on Aprth 7th 2019"
+    const speechText = "your SWGen2dx is on it's way. it will arrive on April 7th 2019"
     return responseBuilder
       .speak(speechText)
       .reprompt(GENERAL_REPROMPT)

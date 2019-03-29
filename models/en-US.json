@@ -34,7 +34,7 @@
                     ]
                 },
                 {
-                    "name": "PostSoftWidgetOrderIntentHandler",
+                    "name": "PostSoftWidgetOrderIntent",
                     "slots": [],
                     "samples": [
                         "Order SWGen two dx",
@@ -45,7 +45,7 @@
                     ]
                 },
                 {
-                    "name": "PutSoftWidgetOrderCancelIntentHandler",
+                    "name": "PutSoftWidgetOrderCancelIntent",
                     "slots": [],
                     "samples": [
                         "Cancel my last order",

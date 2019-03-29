@@ -21,7 +21,7 @@
         },
         "interactionModel": {
           "en-US": {
-            "eTag": "922f7dec8193fa722f3e5eec1069749d"
+            "eTag": "f92c102fbc090ac7ded96bf04a89fb94"
           }
         },
         "lambda": [
@@ -34,7 +34,7 @@
             "codeUri": "lambda/custom",
             "functionName": "ask-custom-dynamodb-starter-alexa-default",
             "handler": "index.handler",
-            "revisionId": "9e6abba5-8988-4174-aa31-8820a67cadef",
+            "revisionId": "c24ed666-ba30-46d9-89d8-966843438c52",
             "runtime": "nodejs8.10"
           }
         ]
