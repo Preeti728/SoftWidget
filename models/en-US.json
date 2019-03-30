@@ -14,7 +14,6 @@
                     ]
                 },
                 {
-
                     "name": "GetSoftWidgetCIOIntent",
                     "slots": [],
                     "samples": [
@@ -102,7 +101,15 @@
                 },
                 {
                     "name": "PostSoftWidgetOrderCancelIntent",
-                    "slots": [],
+                    "slots": [
+                        {
+                            "name": "Number",
+                            "type": "AMAZON.NUMBER",
+                            "samples": [
+                                "{Number}"
+                            ]
+                        }
+                    ],
                     "samples": [
                         "Cancel my last order",
                         "cancel my order",
@@ -121,7 +128,10 @@
                     "slots": [
                         {
                             "name": "Number",
-                            "type": "AMAZON.NUMBER"
+                            "type": "AMAZON.NUMBER",
+                            "samples": [
+                                "{Number}"
+                            ]
                         }
                     ],
                     "samples": [
@@ -142,6 +152,15 @@
                         "when will i get my order",
                         "where is my order",
                         "track"
+                    ]
+                },
+                {
+                    "name": "GetSoftWidgetOrderListIntent",
+                    "slots": [],
+                    "samples": [
+                        "list my orders",
+                        "my orders",
+                        "show my orders "
                     ]
                 },
                 {
@@ -206,6 +225,22 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "PostSoftWidgetOrderCancelIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "Number",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.416126047035.355080022527"
+                            }
+                        }
+                    ]
                 }
             ],
             "delegationStrategy": "ALWAYS"
@@ -231,6 +266,15 @@
             },
             {
                 "id": "Elicit.Slot.377838751349.1205280050159",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the order number?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.416126047035.355080022527",
                 "variations": [
                     {
                         "type": "PlainText",

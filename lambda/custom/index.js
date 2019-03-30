@@ -2,7 +2,6 @@
 /* eslint-disable  no-console */
 
 const Alexa = require('ask-sdk');
-const dbHelper = require('./helpers/dbHelper');
 const dbProduct = require('./helpers/dbProduct');
 const dbOrder = require('./helpers/dbOrder');
 const GENERAL_REPROMPT = "What would you like to do?";
@@ -17,49 +16,6 @@ const LaunchRequestHandler = {
       .speak(speechText)
       .reprompt(repromptText)
       .getResponse();
-  },
-};
-
-const InProgressAddMovieIntentHandler = {
-  canHandle(handlerInput) {
-    const request = handlerInput.requestEnvelope.request;
-    return request.type === 'IntentRequest' &&
-      request.intent.name === 'AddMovieIntent' &&
-      request.dialogState !== 'COMPLETED';
-  },
-  handle(handlerInput) {
-    const currentIntent = handlerInput.requestEnvelope.request.intent;
-    return handlerInput.responseBuilder
-      .addDelegateDirective(currentIntent)
-      .getResponse();
-  }
-}
-
-const AddMovieIntentHandler = {
-  canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && handlerInput.requestEnvelope.request.intent.name === 'AddMovieIntent';
-  },
-  async handle(handlerInput) {
-    const {responseBuilder } = handlerInput;
-    const userID = handlerInput.requestEnvelope.context.System.user.userId; 
-    const slots = handlerInput.requestEnvelope.request.intent.slots;
-    const movieName = slots.MovieName.value;
-    return dbHelper.addMovie(movieName, userID)
-      .then((data) => {
-        const speechText = `You have added movie ${movieName}. You can say add to add another one or remove to remove movie`;
-        return responseBuilder
-          .speak(speechText)
-          .reprompt(GENERAL_REPROMPT)
-          .getResponse();
-      })
-      .catch((err) => {
-        console.log("Error occured while saving movie", err);
-        const speechText = "we cannot save your movie right now. Try again!"
-        return responseBuilder
-          .speak(speechText)
-          .getResponse();
-      })
   },
 };
 
@@ -92,35 +48,6 @@ const AddProductIntentHandler = {
   },
 };
 
-const GetMoviesIntentHandler = {
-  canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && handlerInput.requestEnvelope.request.intent.name === 'GetMoviesIntent';
-  },
-  async handle(handlerInput) {
-    const {responseBuilder } = handlerInput;
-    const userID = handlerInput.requestEnvelope.context.System.user.userId; 
-    return dbHelper.getMovies(userID)
-      .then((data) => {
-        var speechText = "Your movies are "
-        if (data.length == 0) {
-          speechText = "You do not have any favourite movie yet, add movie by saving add moviename "
-        } else {
-          speechText += data.map(e => e.movieTitle).join(", ")
-        }
-        return responseBuilder
-          .speak(speechText)
-          .reprompt(GENERAL_REPROMPT)
-          .getResponse();
-      })
-      .catch((err) => {
-        const speechText = "we cannot get your movie right now. Try again!"
-        return responseBuilder
-          .speak(speechText)
-          .getResponse();
-      })
-  }
-};
 
 const GetProductDetailIntentHandler = {
   canHandle(handlerInput) {
@@ -176,7 +103,7 @@ const GetProductsIntentHandler = {
       .then((data) => {
         var speechText = "We have the following products - "
         if (data.length == 0) {
-          speechText = "You do not have any favourite movie yet, add movie by saving add moviename "
+          speechText = "You do not have any favourite product yet, add product by saving add product "
         } else {
           speechText += data.map(e => e.productName).join(", ")
         }
@@ -186,57 +113,13 @@ const GetProductsIntentHandler = {
           .getResponse();
       })
       .catch((err) => {
-        const speechText = "we cannot get your movie right now. Try again!"
+        const speechText = "we cannot get your product right now. Try again!"
         return responseBuilder
           .speak(speechText)
           .getResponse();
       })
   }
 }
-
-
-const InProgressRemoveMovieIntentHandler = {
-  canHandle(handlerInput) {
-    const request = handlerInput.requestEnvelope.request;
-    return request.type === 'IntentRequest' &&
-      request.intent.name === 'RemoveMovieIntent' &&
-      request.dialogState !== 'COMPLETED';
-  },
-  handle(handlerInput) {
-    const currentIntent = handlerInput.requestEnvelope.request.intent;
-    return handlerInput.responseBuilder
-      .addDelegateDirective(currentIntent)
-      .getResponse();
-  }
-};
-
-const RemoveMovieIntentHandler = {
-  canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && handlerInput.requestEnvelope.request.intent.name === 'RemoveMovieIntent';
-  }, 
-  handle(handlerInput) {
-    const {responseBuilder } = handlerInput;
-    const userID = handlerInput.requestEnvelope.context.System.user.userId; 
-    const slots = handlerInput.requestEnvelope.request.intent.slots;
-    const movieName = slots.MovieName.value;
-    return dbHelper.removeMovie(movieName, userID)
-      .then((data) => {
-        const speechText = `You have removed movie with name ${movieName}, you can add another one by saying add`
-        return responseBuilder
-          .speak(speechText)
-          .reprompt(GENERAL_REPROMPT)
-          .getResponse();
-      })
-      .catch((err) => {
-        const speechText = `You do not have movie with name ${movieName}, you can add it by saying add`
-        return responseBuilder
-          .speak(speechText)
-          .reprompt(GENERAL_REPROMPT)
-          .getResponse();
-      })
-  }
-};
 
 const HelpIntentHandler = {
   canHandle(handlerInput) {
@@ -373,11 +256,27 @@ const PutSoftWidgetOrderCancelIntentHandler = {
   },
   async handle(handlerInput) {
     const {responseBuilder } = handlerInput;
-    const speechText = "Your SWGen2dx Order has been Canceled"
-    return responseBuilder
-      .speak(speechText)
-      .reprompt(GENERAL_REPROMPT)
-      .getResponse();
+    const userID = handlerInput.requestEnvelope.context.System.user.userId; 
+    const slots = handlerInput.requestEnvelope.request.intent.slots;
+    const number = slots.Number.value;
+    let speechText = ``;
+    return dbOrder.cancelOrder(number, userID)
+      .then((data) => {
+        data.map(order => {
+          speechText = `Your SWGen2dx Order ${data.number} has been Canceled`;
+        });
+        return responseBuilder
+          .speak(speechText)
+          .reprompt(GENERAL_REPROMPT)
+          .getResponse();
+      })
+      .catch((err) => {
+        console.log("Error occured while cancelling order", err);
+        const speechText = "we cannot cancel your order right now. Try again!"
+        return responseBuilder
+          .speak(speechText)
+          .getResponse();
+      })
   }
 };
 
@@ -403,6 +302,49 @@ const PutSoftWidgetOrderStatusIntentHandler = {
           }
           else{
             speechText = "Sorry, this order has been cancelled."
+          }
+        });
+        return responseBuilder
+          .speak(speechText)
+          .reprompt(GENERAL_REPROMPT)
+          .getResponse();
+      })
+      .catch((err) => {
+        console.log("Error occured while getting order", err);
+        const speechText = "we cannot track your order right now. Try again!"
+        return responseBuilder
+          .speak(speechText)
+          .getResponse();
+      })
+  }
+};
+
+
+// Order List
+const GetSoftWidgetOrderListIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'GetSoftWidgetOrderListIntent';
+  },
+  async handle(handlerInput) {
+    // var orderList = [];
+    const {responseBuilder } = handlerInput;
+    const userID = handlerInput.requestEnvelope.context.System.user.userId; 
+    let speechText = `Please check your order list: \n`;
+    return dbOrder.getAllOrders(userID)
+      .then((data) => {
+        data.map(order => {
+          if(order != null) {
+            speechText += " Order number "
+            speechText += order.number;
+            speechText += `. You ordered ${order.quantity} pieces for ${order.address}`;
+            speechText += `. The order status is ${order.status}`;
+            if(order.status != "cancelled"){
+              speechText += ` . It will arrive on ${order.deliveryDate}`;
+            }
+          }
+          else{
+            speechText = "You have not placed any orders."
           }
         });
         return responseBuilder
@@ -456,15 +398,11 @@ const skillBuilder = Alexa.SkillBuilders.standard();
 exports.handler = skillBuilder
   .addRequestHandlers(
     LaunchRequestHandler,
-    InProgressAddMovieIntentHandler,
-    AddMovieIntentHandler,
     AddProductIntentHandler,
-    GetMoviesIntentHandler,
     GetProductsIntentHandler,
     GetProductDetailIntentHandler,
-    InProgressRemoveMovieIntentHandler,
-    RemoveMovieIntentHandler,
     GetSoftWidgetIntentHandler,
+    GetSoftWidgetOrderListIntentHandler,
     GetProductInfoIntentHandler,
     GetSoftWidgetCIOIntentHandler,
     GetSoftWidgetCEOIntentHandler,
