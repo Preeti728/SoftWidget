@@ -10,7 +10,7 @@ const LaunchRequestHandler = {
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
   },
   handle(handlerInput) {
-    const speechText = 'Welcome to Softwidget, Inc. What would you like to do next? You can say Tell me about Soft Widget CIO,Tell me about Soft Widget, Tell me about Soft Widget CEO,tell about SWGen two dx,Place an order,cancel order or order status';
+    const speechText = 'Welcome to Softwidget, Inc. What would you like to do next? You can say Tell me about Soft Widget,Tell me about Soft Widget CIO, Tell me about Soft Widget CEO,tell about SWGen two dx,Place an order,cancel order or order status';
     const repromptText = 'What would you like to do? You can say HELP to get available options';
     return handlerInput.responseBuilder
       .speak(speechText)
