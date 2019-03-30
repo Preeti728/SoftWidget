@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "cyber soft",
+            "invocationName": "soft widget",
             "intents": [
                 {
                     "name": "GetSoftWidgetIntent",
@@ -35,7 +35,7 @@
                     ]
                 },
                 {
-                    "name": "GetProductsIntent",
+                    "name": "GetProductInfoIntent",
                     "slots": [],
                     "samples": [
                         "Tell me about Soft Widget product SWGen two dx",
