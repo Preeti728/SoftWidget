@@ -111,6 +111,7 @@
                         }
                     ],
                     "samples": [
+                        "cancel order {Number}",
                         "Cancel my last order",
                         "cancel my order",
                         "cancel order",
@@ -135,6 +136,8 @@
                         }
                     ],
                     "samples": [
+                        "tell me status of order {Number}",
+                        "order status for {Number}",
                         "tell me my order status",
                         "where is my SWGen two dx",
                         "when does my SWGen two dx arrives",
@@ -147,20 +150,12 @@
                         "check my order",
                         "check on my order",
                         "check order",
+                        "check order {Number}",
                         "tell me about my order status",
                         " when deos my order arrives",
                         "when will i get my order",
                         "where is my order",
                         "track"
-                    ]
-                },
-                {
-                    "name": "GetSoftWidgetOrderListIntent",
-                    "slots": [],
-                    "samples": [
-                        "list my orders",
-                        "my orders",
-                        "show my orders "
                     ]
                 },
                 {
@@ -178,6 +173,47 @@
                 {
                     "name": "AMAZON.StopIntent",
                     "samples": []
+                },
+                {
+                    "name": "GetSoftWidgetOrderListIntent",
+                    "slots": [],
+                    "samples": [
+                        "list my orders",
+                        "my orders",
+                        "show my orders "
+                    ]
+                },
+                {
+                    "name": "PutSoftWidgerOrderModifyIntent",
+                    "slots": [
+                        {
+                            "name": "Number",
+                            "type": "AMAZON.NUMBER",
+                            "samples": [
+                                "{Number}"
+                            ]
+                        },
+                        {
+                            "name": "Address",
+                            "type": "AMAZON.StreetAddress",
+                            "samples": [
+                                "{Address}"
+                            ]
+                        },
+                        {
+                            "name": "Quantity",
+                            "type": "AMAZON.NUMBER",
+                            "samples": [
+                                "I need {Quantity}",
+                                "{Quantity}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "modify my order",
+                        "modify order",
+                        "update order"
+                    ]
                 }
             ],
             "types": []
@@ -241,6 +277,41 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "PutSoftWidgerOrderModifyIntent",
+                    "delegationStrategy": "ALWAYS",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "Number",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1361800618929.125169637842"
+                            }
+                        },
+                        {
+                            "name": "Address",
+                            "type": "AMAZON.StreetAddress",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1361800618929.117892956491"
+                            }
+                        },
+                        {
+                            "name": "Quantity",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1361800618929.824398930201"
+                            }
+                        }
+                    ]
                 }
             ],
             "delegationStrategy": "ALWAYS"
@@ -279,6 +350,37 @@
                     {
                         "type": "PlainText",
                         "value": "What is the order number?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1361800618929.125169637842",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is your order number?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1361800618929.117892956491",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Where would you like it to be delivered?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "Tell me the address"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1361800618929.824398930201",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What should be the new quantity?"
                     }
                 ]
             }

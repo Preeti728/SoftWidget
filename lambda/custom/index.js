@@ -5,6 +5,7 @@ const Alexa = require('ask-sdk');
 const dbProduct = require('./helpers/dbProduct');
 const dbOrder = require('./helpers/dbOrder');
 const GENERAL_REPROMPT = "What would you like to do?";
+const maxQuantity = 5;
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
@@ -160,7 +161,7 @@ const GetSoftWidgetIntentHandler = {
       },
       async handle(handlerInput) {
           const { responseBuilder } = handlerInput;
-          const speechText = "Softwidget, Inc., is an American multinational company established in 2017 based in Dallas, Texas, that focuses in e-commerce, cloud computing, and artificial intelligence with a total of 23000 employess world wide. Sofwidget is the second largest e-commerce marketplace and cloud computing platform in the world as measured by revenue and market capitalization with a technology spend of 20 millib and with revenue 50 billion."
+          const speechText = "Softwidget, Inc., is an American multinational company established in 2017 based in Dallas, Texas, that focuses in e-commerce, cloud computing, and artificial intelligence with a total of 23000 employess world wide. Softwidget is the second largest e-commerce marketplace and cloud computing platform in the world as measured by revenue and market capitalization with a technology spend of 20 million and with revenue 50 billion."
           return responseBuilder
               .speak(speechText)
               .reprompt(GENERAL_REPROMPT)
@@ -230,6 +231,12 @@ const PostSoftWidgetOrderIntentHandler = {
     const address = slots.Address.value;
     const number = Math.floor(Math.random() * 10000).toString();
     const deliveryDate = new Date(2019, 03, Math.random()*10 + 1).toDateString();
+    // Check for quantity
+    if( quantity > maxQuantity) {
+      return responseBuilder
+      .speak(`You can only order upto ${maxQuantity} units`)
+      .getResponse();
+    }
     return dbOrder.addOrder(number, quantity, address, userID, deliveryDate)
       .then((data) => {
         const speechText = `your SWGen2dx Order has been placed. The order number is ${number}`;
@@ -262,9 +269,7 @@ const PutSoftWidgetOrderCancelIntentHandler = {
     let speechText = ``;
     return dbOrder.cancelOrder(number, userID)
       .then((data) => {
-        data.map(order => {
-          speechText = `Your SWGen2dx Order ${data.number} has been Canceled`;
-        });
+        speechText = `Your SWGen2dx Order ${number} has been cancelled`;
         return responseBuilder
           .speak(speechText)
           .reprompt(GENERAL_REPROMPT)
@@ -362,6 +367,44 @@ const GetSoftWidgetOrderListIntentHandler = {
   }
 };
 
+// Modify existing order 
+const PutSoftWidgetOrderModifyIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'PutSoftWidgerOrderModifyIntent';
+  },
+  async handle(handlerInput) {
+    const {responseBuilder } = handlerInput;
+    const userID = handlerInput.requestEnvelope.context.System.user.userId; 
+    const slots = handlerInput.requestEnvelope.request.intent.slots;
+    const number = slots.Number.value;
+    const address = slots.Address.value;
+    const quantity = slots.Quantity.value;
+    // Check for quantity
+    if( quantity > maxQuantity) {
+      return responseBuilder
+      .speak(`You can only order upto ${maxQuantity} units`)
+      .getResponse();
+    }
+    let speechText = ``;
+    return dbOrder.modifyOrder(number, address, quantity, userID)
+      .then((data) => {
+        speechText = `Your SWGen2dx Order ${number} has been updated.ww`;
+        speechText += ` new address is ${data['Attributes']['address']} with quantity ${data['Attributes']['quantity']}`;
+        return responseBuilder
+          .speak(speechText)
+          .reprompt(GENERAL_REPROMPT)
+          .getResponse();
+      })
+      .catch((err) => {
+        console.log("Error occured while modifying order", err);
+        const speechText = "we cannot modify your order right now. Try again!"
+        return responseBuilder
+          .speak(speechText)
+          .getResponse();
+      })
+  }
+};
 
 /* END SoftWidget */
 
@@ -408,6 +451,7 @@ exports.handler = skillBuilder
     GetSoftWidgetCEOIntentHandler,
     PostSoftWidgetOrderIntentHandler,
     PutSoftWidgetOrderCancelIntentHandler,
+    PutSoftWidgetOrderModifyIntentHandler,
     PutSoftWidgetOrderStatusIntentHandler,
     HelpIntentHandler,
     CancelAndStopIntentHandler,

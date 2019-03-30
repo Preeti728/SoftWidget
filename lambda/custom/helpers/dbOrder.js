@@ -107,5 +107,34 @@ dbOrder.prototype.getAllOrders = (userID) => {
     });
 }
 
+dbOrder.prototype.modifyOrder = (number, address, quantity, userID) => {
+    return new Promise((resolve, reject) => {
+        const params = {
+            TableName: tableName,
+            Key: {
+                'userId': userID,
+                'number': number
+            },
+            UpdateExpression: "SET #address = :address, #quantity = :quantity",
+            ExpressionAttributeValues: {
+                ":address"  : address,
+                ":quantity" : quantity
+            },
+            ExpressionAttributeNames: {
+                "#address"  : "address",
+                "#quantity" : "quantity"
+            },
+            ReturnValues:"UPDATED_NEW"
+        };
+        docClient.update(params, (err, data) => {
+            if (err) {
+                console.log("Unable to update order =>", JSON.stringify(err))
+                return reject("Unable to update");
+            }
+            console.log("Updated Data, ", JSON.stringify(data));
+            resolve(data);
+        });
+    });
+}
 
 module.exports = new dbOrder();
