@@ -1,14 +1,14 @@
 {
   "deploy_settings": {
     "default": {
-      "skill_id": "amzn1.ask.skill.1d20e80c-7710-4d95-96cb-e45c1a42af00",
+      "skill_id": "amzn1.ask.skill.d53e2426-af4c-4f8b-a84f-18d4d8436db6",
       "was_cloned": false,
       "merge": {
         "manifest": {
           "apis": {
             "custom": {
               "endpoint": {
-                "uri": "arn:aws:lambda:us-east-1:899999595393:function:ask-custom-dynamodb-starter-alexa-default"
+                "uri": "arn:aws:lambda:us-east-1:899999595393:function:Prod-ask-custom-dynamodb-starter-alexa"
               }
             }
           }
@@ -21,7 +21,7 @@
         },
         "interactionModel": {
           "en-US": {
-            "eTag": "23c242e54601b836ffdb5b80680a09cc"
+            "eTag": "f92c102fbc090ac7ded96bf04a89fb94"
           }
         },
         "lambda": [
@@ -29,12 +29,12 @@
             "alexaUsage": [
               "custom/default"
             ],
-            "arn": "arn:aws:lambda:us-east-1:899999595393:function:ask-custom-dynamodb-starter-alexa-default",
+            "arn": "arn:aws:lambda:us-east-1:899999595393:function:Prod-ask-custom-dynamodb-starter-alexa",
             "awsRegion": "us-east-1",
             "codeUri": "lambda/custom",
-            "functionName": "ask-custom-dynamodb-starter-alexa-default",
+            "functionName": "Prod-ask-custom-dynamodb-starter-alexa",
             "handler": "index.handler",
-            "revisionId": "5da22a24-8c0a-4fe4-bc2a-7abc2e6837a4",
+            "revisionId": "c24ed666-ba30-46d9-89d8-966843438c52",
             "runtime": "nodejs8.10"
           }
         ]

@@ -4,12 +4,24 @@
             "invocationName": "cyber soft",
             "intents": [
                 {
+                    "name": "GetSoftWidgetIntent",
+                    "slots": [],
+                    "samples": [
+                        "Tell me about Soft Widget",
+                        "about soft widget",
+                        "about company",
+                        "company details"
+                    ]
+                },
+                {
+
                     "name": "GetSoftWidgetCIOIntent",
                     "slots": [],
                     "samples": [
                         "Tell me about Soft Widget CIO",
                         "CIO",
-                        "Soft Widget CIO"
+                        "Soft Widget CIO",
+                        "about CIO"
                     ]
                 },
                 {
@@ -18,36 +30,23 @@
                     "samples": [
                         "Tell me about Soft Widget CEO",
                         "CEO",
-                        "Soft Widget CEO"
+                        "Soft Widget CEO",
+                        "about CEO"
                     ]
                 },
                 {
                     "name": "GetProductsIntent",
                     "slots": [],
                     "samples": [
-                        "list the products",
-                        "what products can I buy",
-                        "what products do you have",
-                        "all products"
-                    ]
-                },
-                {
-                    "name": "RemoveMovieIntent",
-                    "slots": [
-                        {
-                            "name": "MovieName",
-                            "type": "AMAZON.Movie",
-                            "samples": [
-                                "{MovieName}"
-                            ]
-                        }
-                    ],
-                    "samples": [
-                        "Tell me about Soft Widgets product SWGen two dx",
+                        "Tell me about Soft Widget product SWGen two dx",
                         "SWGen two dx",
                         "Soft Widget SWGen two dx",
                         "What is SWGen two dx",
-                        "tell about SWGen two dx"
+                        "tell about SWGen two dx",
+                        "product info",
+                        "tell about product details",
+                        "about product details",
+                        "about product"
                     ]
                 },
                 {
@@ -94,7 +93,11 @@
                         "Place an order SWGen two dx",
                         "Buy a SWGen two dx",
                         "get SWGen two dx",
-                        "tell about SWGen two dx"
+                        "buy product ",
+                        "place order",
+                        "order product",
+                        "order",
+                        "buy"
                     ]
                 },
                 {
@@ -105,54 +108,12 @@
                         "cancel my order",
                         "cancel order",
                         "Cancel  SWGen two dx",
-                        "I don't need SWGen two dx"
-                    ]
-                }
-            ],
-            "types": []
-        },
-        "dialog": {
-            "intents": [
-                {
-                    "name": "AddMovieIntent",
-                    "confirmationRequired": false,
-                    "prompts": {},
-                    "slots": [
-                        {
-                            "name": "MovieName",
-                            "type": "AMAZON.Movie",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.932310416052.1004645578092"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "AddProductIntent",
-                    "delegationStrategy": "ALWAYS",
-                    "confirmationRequired": false,
-                    "prompts": {},
-                    "slots": [
-                        {
-                            "name": "ProductName",
-                            "type": "AMAZON.Movie",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.172707220174.18628814363"
-                            }
-                        },
-                        {
-                            "name": "ProductCategory",
-                            "type": "AMAZON.Movie",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.172707220174.233880517640"
-                            }
-                        }
+                        "I don't need SWGen two dx",
+                        "remove order",
+                        "delete order",
+                        "cancel",
+                        "delete",
+                        "remove"
                     ]
                 },
                 {
@@ -166,15 +127,37 @@
                     "samples": [
                         "tell me my order status",
                         "where is my SWGen two dx",
-                        "when is my SWGen two dx arrives",
+                        "when does my SWGen two dx arrives",
                         "order status",
-                        "track order",
+                        "My order status",
+                        "where is my order",
                         "track my order",
-                        "my order status"
+                        "track order",
+                        "order tracking",
+                        "check my order",
+                        "check on my order",
+                        "check order",
+                        "tell me about my order status",
+                        " when deos my order arrives",
+                        "when will i get my order",
+                        "where is my order",
+                        "track"
                     ]
                 },
                 {
-                    "name": "AMAZON.NavigateHomeIntent",
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
                     "samples": []
                 }
             ],
