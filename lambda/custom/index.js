@@ -10,9 +10,8 @@ const LaunchRequestHandler = {
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
   },
   handle(handlerInput) {
-    const speechText = 'Softwidget, Inc., is an American multinational company established in 2017 based in Dallas, Texas, that focuses in e-commerce, cloud computing, and artificial intelligence with a total of 23000 employess world wide. Sofwidget is the second largest e-commerce marketplace and cloud computing platform in the world as measured by revenue and market capitalization with a technology spend of 20 millib and with revenue 50 billion';
+    const speechText = 'Welcome to Softwidget, Inc. What would you like to do next? You can say Tell me about Soft Widget CIO,Tell me about Soft Widget, Tell me about Soft Widget CEO,tell about SWGen two dx,Place an order,cancel order or order status';
     const repromptText = 'What would you like to do? You can say HELP to get available options';
-
     return handlerInput.responseBuilder
       .speak(speechText)
       .reprompt(repromptText)
@@ -213,19 +212,19 @@ const CancelAndStopIntentHandler = {
 /* SoftWidget Start */
 //  GetSoftWidgetIntent
 const GetSoftWidgetIntentHandler = {
-  canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && handlerInput.requestEnvelope.request.intent.name === 'GetSoftWidgetIntent';
-  },
-  async handle(handlerInput) {
-    const {responseBuilder } = handlerInput;
-    const speechText = "this is Softwidget"
-    return responseBuilder
-      .speak(speechText)
-      .reprompt(GENERAL_REPROMPT)
-      .getResponse();
-  }
-};
+      canHandle(handlerInput) {
+          return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+              && handlerInput.requestEnvelope.request.intent.name === 'GetSoftWidgetIntent';
+      },
+      async handle(handlerInput) {
+          const { responseBuilder } = handlerInput;
+          const speechText = "Softwidget, Inc., is an American multinational company established in 2017 based in Dallas, Texas, that focuses in e-commerce, cloud computing, and artificial intelligence with a total of 23000 employess world wide. Sofwidget is the second largest e-commerce marketplace and cloud computing platform in the world as measured by revenue and market capitalization with a technology spend of 20 millib and with revenue 50 billion."
+          return responseBuilder
+              .speak(speechText)
+              .reprompt(GENERAL_REPROMPT)
+              .getResponse();
+      }
+  };
 
 // Get Product Info 
 const GetProductInfoIntentHandler = {
