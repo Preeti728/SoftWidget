@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "soft widget",
+            "invocationName": "soft widget prod",
             "intents": [
                 {
                     "name": "GetSoftWidgetIntent",
