@@ -389,8 +389,8 @@ const PutSoftWidgetOrderModifyIntentHandler = {
     let speechText = ``;
     return dbOrder.modifyOrder(number, address, quantity, userID)
       .then((data) => {
-        speechText = `Your SWGen2dx Order ${number} has been updated.ww`;
-        speechText += ` new address is ${data['Attributes']['address']} with quantity ${data['Attributes']['quantity']}`;
+        speechText = `Your SWGen2dx Order ${number} has been updated. `;
+        speechText += ` New address is ${data['Attributes']['address']} with quantity ${data['Attributes']['quantity']}`;
         return responseBuilder
           .speak(speechText)
           .reprompt(GENERAL_REPROMPT)
